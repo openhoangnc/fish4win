@@ -35,9 +35,39 @@ bash -c "pacman-key --init"
 bash -c "pacman-key --populate msys2"
 bash -c "pacman -S python3 --noconfirm"
 
+$initPathPy = "$Env:LOCALAPPDATA/msys64/init-path.py"
+Write-Output "import os" > $initPathPy
+Write-Output "BIN_PATH = '/usr/local/bin:/usr/bin:/bin:/opt/bin:'" >> $initPathPy
+Write-Output "print(BIN_PATH+os.environ.get('PATH').replace(BIN_PATH,''))" os >> $initPathPy
+
+# $bashrc = "$Env:LOCALAPPDATA/msys64/etc/bash.bashrc"
+# PATH=$(/usr/bin/python $LOCALAPPDATA/msys64/init-path.py) >>>>>>>>>> $bashrc
+
+# $fishConfig = "$Env:LOCALAPPDATA/msys64/etc/fish/config.fish"
+# set -x PATH (/usr/bin/python $LOCALAPPDATA/msys64/init-path.py) >>>>>>>> $fishConfig 
+
 # TODO 0: confirm and install other shell (bash, zsh, fish, ...)
+
 # TODO 1: update $windowsTerminalSettingFile
+#    {
+#        "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44ba}",
+#        "name": "MSYS Bash",
+#        "commandline": "%LOCALAPPDATA%\\msys64\\usr\\bin\\bash.exe",
+#        "icon": "%LOCALAPPDATA%\\msys64\\msys2.ico",
+#        "hidden": false,
+#        "startingDirectory": "%USERPROFILE%"
+#    },
+#    {
+#        "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bb}",
+#        "name": "MSYS Fish",
+#        "commandline": "%LOCALAPPDATA%\\msys64\\usr\\bin\\fish.exe",
+#        "icon": "%LOCALAPPDATA%\\msys64\\msys2.ico",
+#        "hidden": false,
+#        "startingDirectory": "%USERPROFILE%"
+#    },
+
 # TODO 2: confirm and update vscode terminal setting
+# "terminal.integrated.shell.windows": "${env:LOCALAPPDATA}\\msys64\\usr\\bin\\fish.exe",
 
 Pop-Location
 
