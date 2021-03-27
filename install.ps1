@@ -18,48 +18,32 @@ Write-Output "Downloading $url+$file to $packageFile"
 (New-Object System.Net.WebClient).DownloadFile($url+$file, $packageFile)
 
 Push-Location $Env:LOCALAPPDATA
-
 Invoke-Expression "$packageFile -y"
-
-$nsswitchFile =  "$Env:LOCALAPPDATA/msys64/etc/nsswitch.conf"
-((Get-Content $nsswitchFile -Raw) -replace 'db_home: cygwin desc','db_home: windows') | Set-Content $nsswitchFile
 
 $binPath = "$Env:LOCALAPPDATA\msys64\usr\bin"
 if($Env:Path -NotMatch ($binPath -replace '\\', '\\')) {
     $Env:Path = "$binPath;$Env:Path"
 }
-
-$Env:Path
-
 bash -c "pacman-key --init"
 bash -c "pacman-key --populate msys2"
-bash -c "pacman -S python3 --noconfirm"
+bash -c "pacman -S python3 diffutils patch fish --noconfirm"
 
-$initPathPy = "$Env:LOCALAPPDATA/msys64/init-path.py"
-Write-Output "import os" > $initPathPy
-Write-Output "BIN_PATH = '/usr/local/bin:/usr/bin:/bin:/opt/bin:'" >> $initPathPy
-Write-Output "print(BIN_PATH+os.environ.get('PATH').replace(BIN_PATH,''))" os >> $initPathPy
-
-# $bashrc = "$Env:LOCALAPPDATA/msys64/etc/bash.bashrc"
-# PATH=$(/usr/bin/python $LOCALAPPDATA/msys64/init-path.py) >>>>>>>>>> $bashrc
-
-# $fishConfig = "$Env:LOCALAPPDATA/msys64/etc/fish/config.fish"
-# set -x PATH (/usr/bin/python $LOCALAPPDATA/msys64/init-path.py) >>>>>>>> $fishConfig 
-
-# TODO 0: confirm and install other shell (bash, zsh, fish, ...)
+bash -c "cd /etc && wget https://github.com/openhoangnc/fish4win/raw/main/init-path.py"
+bash -c "cd / && wget https://github.com/openhoangnc/fish4win/raw/main/configs.patch && patch -p0 -N < configs.patch && rm configs.patch"
+bash -c "mkdir /etc/shm"
 
 # TODO 1: update $windowsTerminalSettingFile
 #    {
-#        "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44ba}",
-#        "name": "MSYS Bash",
+#        "guid": "{335dd601-c909-4a68-90a2-ba1d962c612d}",
+#        "name": "MSYS2 Bash",
 #        "commandline": "%LOCALAPPDATA%\\msys64\\usr\\bin\\bash.exe",
 #        "icon": "%LOCALAPPDATA%\\msys64\\msys2.ico",
 #        "hidden": false,
 #        "startingDirectory": "%USERPROFILE%"
 #    },
 #    {
-#        "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bb}",
-#        "name": "MSYS Fish",
+#        "guid": "{2733b63c-5398-444b-badb-fe795f96f984}",
+#        "name": "MSYS2 Fish",
 #        "commandline": "%LOCALAPPDATA%\\msys64\\usr\\bin\\fish.exe",
 #        "icon": "%LOCALAPPDATA%\\msys64\\msys2.ico",
 #        "hidden": false,
@@ -74,4 +58,5 @@ Pop-Location
 Write-Output "Deleting $packageFile"
 Remove-Item $packageFile
 
+Write-Output "All done!"
 Read-Host
