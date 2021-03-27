@@ -12,17 +12,16 @@
  
 --- /etc/fish/config.fish  2021-03-26 22:42:44.395953400 -0700
 +++ /etc/fish/config.fish  2021-03-26 22:41:56.631955200 -0700
-@@ -13,6 +13,8 @@
+@@ -13,6 +13,9 @@
  #   ...
  # end
 
++# Init path, setup by https://github.com/openhoangnc/fish4win
 +set -x PATH (/usr/bin/python /etc/init-path.py)
 +
  if status --is-login
         source /etc/fish/msys2.fish
  end
-\ No newline at end of file
-
 
 --- /etc/nsswitch.conf  2021-03-26 22:29:53.233067900 -0700
 +++ /etc/nsswitch.conf  2021-03-26 21:34:01.340397400 -0700
