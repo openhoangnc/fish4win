@@ -30,7 +30,7 @@ bash -c "pacman -S python3 diffutils patch fish --noconfirm"
 
 bash -c "cd /etc && wget https://github.com/openhoangnc/fish4win/raw/main/init-path.py"
 bash -c "cd / && wget https://github.com/openhoangnc/fish4win/raw/main/configs.patch && patch -p0 -N < configs.patch && rm configs.patch"
-bash -c "mkdir /etc/shm"
+bash -c "mkdir /dev/shm"
 
 # TODO 1: update $windowsTerminalSettingFile
 #    {
