@@ -1,0 +1,38 @@
+--- /etc/bash.bashrc	2021-03-26 21:57:47.336999800 -0700
++++ /etc/bash.bashrc	2021-03-26 21:58:48.510927100 -0700
+@@ -9,6 +9,9 @@
+ 
+ # System-wide bashrc file
+ 
++# Init path, setup by https://github.com/openhoangnc/fish4win
++PATH=$(/usr/bin/python /etc/init-path.py)
++
+ # Check that we haven't already been sourced.
+ ([[ -z ${CYG_SYS_BASHRC} ]] && CYG_SYS_BASHRC="1") || return
+ 
+--- /etc/fish/config.fish  2021-03-26 22:42:44.395953400 -0700
++++ /etc/fish/config.fish  2021-03-26 22:41:56.631955200 -0700
+@@ -13,6 +13,8 @@
+ #   ...
+ # end
+
++set -x PATH (/usr/bin/python /etc/init-path.py)
++
+ if status --is-login
+        source /etc/fish/msys2.fish
+ end
+\ No newline at end of file
+
+
+--- /etc/nsswitch.conf  2021-03-26 22:29:53.233067900 -0700
++++ /etc/nsswitch.conf  2021-03-26 21:34:01.340397400 -0700
+@@ -5,9 +5,9 @@
+
+ db_enum: cache builtin
+
+-db_home: cygwin desc
++db_home: windows
+ db_shell: cygwin desc
+ db_gecos: cygwin desc
+
+ # End /etc/nsswitch.conf
