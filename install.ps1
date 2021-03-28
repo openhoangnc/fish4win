@@ -30,6 +30,8 @@ bash -c "pacman -S python3 diffutils patch fish --noconfirm"
 
 bash -c "cd /etc && wget https://github.com/openhoangnc/fish4win/raw/main/init-path.py"
 bash -c "cd / && wget https://github.com/openhoangnc/fish4win/raw/main/configs.patch && patch -p0 -N < configs.patch && rm configs.patch"
+
+# folder using by fish
 bash -c "mkdir /dev/shm"
 
 # TODO 1: update $windowsTerminalSettingFile
@@ -50,8 +52,9 @@ bash -c "mkdir /dev/shm"
 #        "startingDirectory": "%USERPROFILE%"
 #    },
 
-# TODO 2: confirm and update vscode terminal setting
-# "terminal.integrated.shell.windows": "${env:LOCALAPPDATA}\\msys64\\usr\\bin\\fish.exe",
+# update vscode terminal setting
+bash -c "wget https://github.com/openhoangnc/fish4win/raw/main/vscode-setting.py && python vscode-setting.py && rm vscode-setting.py"
+
 
 Pop-Location
 
