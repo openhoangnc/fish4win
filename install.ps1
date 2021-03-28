@@ -34,27 +34,13 @@ bash -c "cd / && wget https://github.com/openhoangnc/fish4win/raw/main/configs.p
 # folder using by fish
 bash -c "mkdir /dev/shm"
 
-# TODO 1: update $windowsTerminalSettingFile
-#    {
-#        "guid": "{335dd601-c909-4a68-90a2-ba1d962c612d}",
-#        "name": "MSYS2 Bash",
-#        "commandline": "%LOCALAPPDATA%\\msys64\\usr\\bin\\bash.exe",
-#        "icon": "%LOCALAPPDATA%\\msys64\\msys2.ico",
-#        "hidden": false,
-#        "startingDirectory": "%USERPROFILE%"
-#    },
-#    {
-#        "guid": "{2733b63c-5398-444b-badb-fe795f96f984}",
-#        "name": "MSYS2 Fish",
-#        "commandline": "%LOCALAPPDATA%\\msys64\\usr\\bin\\fish.exe",
-#        "icon": "%LOCALAPPDATA%\\msys64\\msys2.ico",
-#        "hidden": false,
-#        "startingDirectory": "%USERPROFILE%"
-#    },
+# update WindowsTerminal Setting
+bash -c "wget https://github.com/openhoangnc/fish4win/raw/main/wt-setting.py && python wt-setting.py && rm wt-setting.py"
 
 # update vscode terminal setting
-bash -c "wget https://github.com/openhoangnc/fish4win/raw/main/vscode-setting.py && python vscode-setting.py && rm vscode-setting.py"
-
+if (Test-Path -Path "$Env:APPDATA\\Code\\User\\settings.json" -PathType Leaf) {
+    bash -c "wget https://github.com/openhoangnc/fish4win/raw/main/vscode-setting.py && python vscode-setting.py && rm vscode-setting.py"
+}
 
 Pop-Location
 
@@ -63,3 +49,8 @@ Remove-Item $packageFile
 
 Write-Output "All done!"
 Read-Host
+
+# TODO: uninstaller
+# 1. Delete $Env:LOCALAPPDATA\msys64 folder
+# 2. Remove $windowsTerminalSettingFile entries
+# 3. Remove vscode settings.json "terminal.integrated.shell.windows"
