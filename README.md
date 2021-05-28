@@ -4,6 +4,11 @@
 
 2. Run it with PowerShell (right click - Run with PowerShell)
 
+![image](https://user-images.githubusercontent.com/20717116/119968027-2c7a0480-bfd7-11eb-9885-2e6c7b79ab82.png)
+![image](https://user-images.githubusercontent.com/20717116/119967990-23893300-bfd7-11eb-9a59-c9b1da58b163.png)
+![image](https://user-images.githubusercontent.com/20717116/119968040-30a62200-bfd7-11eb-970a-46425bdb831a.png)
+
+
 ## Donation
 Eat to live, live to code
 
